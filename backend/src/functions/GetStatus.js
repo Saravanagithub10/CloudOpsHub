@@ -6,9 +6,13 @@ app.http('GetStatus', {
     handler: async (request, context) => {
         return {
             jsonBody: {
-                project: 'CloudOps Hub',
-                status: 'Running',
-                message: 'Backend API is working successfully'
+                project: "CloudOps Hub",
+                status: "Running",
+                cpuUsage: "25%",
+                memoryUsage: "40%",
+                lastDeployment: "2026-06-17",
+                frontendHealth: "Healthy",
+                backendHealth: "Healthy"
             }
         };
     }
