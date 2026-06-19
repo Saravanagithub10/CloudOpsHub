@@ -5,7 +5,7 @@ function App() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch("http://127.0.0.1:7071/api/GetStatus")
+    fetch("https://cloudopshub-func-e5avaqehhacydcex.centralindia-01.azurewebsites.net/api/GetStatus")
       .then((res) => res.json())
       .then((result) => {
         console.log("RESULT:", result);
