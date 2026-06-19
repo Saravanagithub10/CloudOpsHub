@@ -4,7 +4,8 @@ const cardStyle = {
   background: "white",
   padding: "20px",
   borderRadius: "12px",
-  boxShadow: "0 2px 10px rgba(0,0,0,0.1)"
+  boxShadow: "0 2px 10px rgba(0,0,0,0.1)",
+  textAlign: "center"
 };
 
 function App() {
@@ -12,29 +13,40 @@ function App() {
   const [error, setError] = useState(null);
   const [lastUpdated, setLastUpdated] = useState("");
 
-  useEffect(() => {
-    const fetchData = () => {
-      fetch(
-        "https://cloudopshub-func-e5avaqehhacydcex.centralindia-01.azurewebsites.net/api/GetStatus"
-      )
-        .then((res) => res.json())
-        .then((result) => {
-          console.log("RESULT:", result);
-          setData(result);
-          setLastUpdated(new Date().toLocaleTimeString());
-        })
-        .catch((err) => {
-          console.error("API ERROR:", err);
-          setError(err.message);
-        });
-    };
+  const fetchData = () => {
+    fetch(
+      "https://cloudopshub-func-e5avaqehhacydcex.centralindia-01.azurewebsites.net/api/GetStatus"
+    )
+      .then((res) => res.json())
+      .then((result) => {
+        setData(result);
+        setLastUpdated(new Date().toLocaleTimeString());
+      })
+      .catch((err) => {
+        setError(err.message);
+      });
+  };
 
+  useEffect(() => {
     fetchData();
 
     const interval = setInterval(fetchData, 30000);
 
     return () => clearInterval(interval);
   }, []);
+
+  const getStatusColor = (status) => {
+    switch (status?.toLowerCase()) {
+      case "running":
+        return "green";
+      case "warning":
+        return "orange";
+      case "down":
+        return "red";
+      default:
+        return "gray";
+    }
+  };
 
   if (error) {
     return <h1>Error: {error}</h1>;
@@ -47,7 +59,7 @@ function App() {
   return (
     <div
       style={{
-        maxWidth: "1200px",
+        maxWidth: "1300px",
         margin: "auto",
         padding: "20px",
         fontFamily: "Arial",
@@ -65,17 +77,33 @@ function App() {
         Last Updated: {lastUpdated}
       </p>
 
+      <div style={{ textAlign: "center", marginBottom: "25px" }}>
+        <button
+          onClick={fetchData}
+          style={{
+            padding: "10px 20px",
+            border: "none",
+            borderRadius: "8px",
+            cursor: "pointer",
+            fontSize: "16px"
+          }}
+        >
+          🔄 Refresh Dashboard
+        </button>
+      </div>
+
       <div
         style={{
           display: "grid",
           gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-          gap: "20px",
-          marginTop: "30px"
+          gap: "20px"
         }}
       >
         <div style={cardStyle}>
           <h3>🟢 System Status</h3>
-          <h2>{data.status}</h2>
+          <h2 style={{ color: getStatusColor(data.status) }}>
+            {data.status}
+          </h2>
         </div>
 
         <div style={cardStyle}>
@@ -92,12 +120,27 @@ function App() {
           <h3>🚀 Deployment</h3>
           <h2>Success</h2>
         </div>
+
+        <div style={cardStyle}>
+          <h3>📈 Uptime</h3>
+          <h2>{data.uptime}</h2>
+        </div>
+
+        <div style={cardStyle}>
+          <h3>👥 Active Users</h3>
+          <h2>{data.activeUsers}</h2>
+        </div>
+
+        <div style={cardStyle}>
+          <h3>🚨 Alerts</h3>
+          <h2>{data.alerts}</h2>
+        </div>
       </div>
 
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "1fr 1fr",
+          gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
           gap: "20px",
           marginTop: "30px"
         }}
@@ -110,8 +153,8 @@ function App() {
 
         <div style={cardStyle}>
           <h2>Deployment Information</h2>
-          <p>Last Deployment: {data.lastDeployment}</p>
           <p>Project: {data.project}</p>
+          <p>Last Deployment: {data.lastDeployment}</p>
         </div>
       </div>
     </div>
