@@ -1,4 +1,10 @@
 import React, { useEffect, useState } from "react";
+const cardStyle = {
+  background: "white",
+  padding: "20px",
+  borderRadius: "12px",
+  boxShadow: "0 2px 10px rgba(0,0,0,0.1)"
+};
 
 function App() {
   const [data, setData] = useState(null);
@@ -25,40 +31,73 @@ function App() {
     return <h1>Loading Dashboard...</h1>;
   }
 
-  return (
+    return (
+  <div
+    style={{
+      maxWidth: "1200px",
+      margin: "auto",
+      padding: "20px",
+      fontFamily: "Arial",
+      backgroundColor: "#f4f6f9",
+      minHeight: "100vh"
+    }}
+  >
+    <h1 style={{ textAlign: "center" }}>🚀 CloudOps Hub</h1>
+    <p style={{ textAlign: "center", color: "#666" }}>
+      Azure Cloud Monitoring Dashboard
+    </p>
+
     <div
       style={{
-        maxWidth: "900px",
-        margin: "auto",
-        padding: "20px",
-        fontFamily: "Arial"
+        display: "grid",
+        gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+        gap: "20px",
+        marginTop: "30px"
       }}
     >
-      <h1>🚀 CloudOps Hub</h1>
-
-      <div style={{ border: "1px solid #ddd", padding: "15px", marginTop: "15px" }}>
-        <h2>System Status</h2>
-        <p>🟢 {data.status}</p>
+      <div style={cardStyle}>
+        <h3>🟢 System Status</h3>
+        <h2>{data.status}</h2>
       </div>
 
-      <div style={{ border: "1px solid #ddd", padding: "15px", marginTop: "15px" }}>
+      <div style={cardStyle}>
+        <h3>⚙ CPU Usage</h3>
+        <h2>{data.cpuUsage}</h2>
+      </div>
+
+      <div style={cardStyle}>
+        <h3>🧠 Memory Usage</h3>
+        <h2>{data.memoryUsage}</h2>
+      </div>
+
+      <div style={cardStyle}>
+        <h3>🚀 Deployment</h3>
+        <h2>Success</h2>
+      </div>
+    </div>
+
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns: "1fr 1fr",
+        gap: "20px",
+        marginTop: "30px"
+      }}
+    >
+      <div style={cardStyle}>
         <h2>Resource Health</h2>
         <p>Frontend: 🟢 {data.frontendHealth}</p>
         <p>Backend: 🟢 {data.backendHealth}</p>
       </div>
 
-      <div style={{ border: "1px solid #ddd", padding: "15px", marginTop: "15px" }}>
-        <h2>System Metrics</h2>
-        <p>CPU Usage: {data.cpuUsage}</p>
-        <p>Memory Usage: {data.memoryUsage}</p>
-      </div>
-
-      <div style={{ border: "1px solid #ddd", padding: "15px", marginTop: "15px" }}>
+      <div style={cardStyle}>
         <h2>Deployment Information</h2>
         <p>Last Deployment: {data.lastDeployment}</p>
+        <p>Project: {data.project}</p>
       </div>
     </div>
-  );
+  </div>
+);
 }
 
 export default App;
