@@ -40,6 +40,39 @@ app.http('GetStatus', {
                         severity: "Info",
                         message: "Deployment completed successfully"
                     }
+                ],
+
+                incidentTimeline: [
+                    {
+                        time: "09:15 AM",
+                        event: "CPU usage exceeded threshold"
+                    },
+                    {
+                        time: "09:30 AM",
+                        event: "Alert generated"
+                    },
+                    {
+                        time: "09:45 AM",
+                        event: "System stabilized"
+                    }
+                ],
+
+                deploymentHistory: [
+                    {
+                        version: "v1.0",
+                        date: "2026-06-20",
+                        status: "Success"
+                    },
+                    {
+                        version: "v0.9",
+                        date: "2026-06-18",
+                        status: "Success"
+                    },
+                    {
+                        version: "v0.8",
+                        date: "2026-06-15",
+                        status: "Success"
+                    }
                 ]
             }
         };

@@ -46,6 +46,67 @@ function App() {
       }}
     >
       <h1>🚀 CloudOps Hub</h1>
+      <div
+  style={{
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
+    gap: "15px",
+    marginTop: "20px",
+    marginBottom: "20px"
+  }}
+>
+  <div
+    style={{
+      backgroundColor: "#e5f0ff",
+      padding: "20px",
+      borderRadius: "10px",
+      textAlign: "center"
+    }}
+  >
+    <h3>💻 CPU Usage</h3>
+    <h2>{data.cpuUsage}</h2>
+  </div>
+
+  <div
+    style={{
+      backgroundColor: "#e8ffe8",
+      padding: "20px",
+      borderRadius: "10px",
+      textAlign: "center"
+    }}
+  >
+    <h3>🧠 Memory Usage</h3>
+    <h2>{data.memoryUsage}</h2>
+  </div>
+
+  <div
+    style={{
+      backgroundColor: "#fff4e5",
+      padding: "20px",
+      borderRadius: "10px",
+      textAlign: "center"
+    }}
+  >
+    <h3>👥 Active Users</h3>
+    <h2>{data.activeUsers}</h2>
+  </div>
+
+  <div
+    style={{
+      backgroundColor: "#ffe5e5",
+      padding: "20px",
+      borderRadius: "10px",
+      textAlign: "center"
+    }}
+  >
+    <h3>🚨 Total Alerts</h3>
+    <h2>
+      {(data.alerts?.critical || 0) +
+        (data.alerts?.warning || 0) +
+        (data.alerts?.info || 0)}
+    </h2>
+  </div>
+</div>
 
       <button
         onClick={fetchData}
