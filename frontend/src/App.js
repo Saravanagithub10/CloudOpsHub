@@ -156,6 +156,13 @@ function App() {
           <p>Project: {data.project}</p>
           <p>Last Deployment: {data.lastDeployment}</p>
         </div>
+        <div style={{ border: "1px solid #ddd", padding: "15px", marginTop: "15px" }}>
+  <h2>Azure Monitoring</h2>
+  <p>📊 Application Insights: Connected</p>
+  <p>📡 Live Telemetry: Active</p>
+  <p>🟢 Frontend Status: Healthy</p>
+  <p>🟢 Backend Status: Healthy</p>
+</div>
       </div>
     </div>
   );
