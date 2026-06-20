@@ -1,17 +1,8 @@
 import React, { useEffect, useState } from "react";
 
-const cardStyle = {
-  background: "white",
-  padding: "20px",
-  borderRadius: "12px",
-  boxShadow: "0 2px 10px rgba(0,0,0,0.1)",
-  textAlign: "center"
-};
-
 function App() {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
-  const [lastUpdated, setLastUpdated] = useState("");
 
   const fetchData = () => {
     fetch(
@@ -20,9 +11,9 @@ function App() {
       .then((res) => res.json())
       .then((result) => {
         setData(result);
-        setLastUpdated(new Date().toLocaleTimeString());
       })
       .catch((err) => {
+        console.error("API ERROR:", err);
         setError(err.message);
       });
   };
@@ -30,23 +21,12 @@ function App() {
   useEffect(() => {
     fetchData();
 
-    const interval = setInterval(fetchData, 30000);
+    const interval = setInterval(() => {
+      fetchData();
+    }, 10000);
 
     return () => clearInterval(interval);
   }, []);
-
-  const getStatusColor = (status) => {
-    switch (status?.toLowerCase()) {
-      case "running":
-        return "green";
-      case "warning":
-        return "orange";
-      case "down":
-        return "red";
-      default:
-        return "gray";
-    }
-  };
 
   if (error) {
     return <h1>Error: {error}</h1>;
@@ -59,125 +39,156 @@ function App() {
   return (
     <div
       style={{
-        maxWidth: "1300px",
+        maxWidth: "1000px",
         margin: "auto",
         padding: "20px",
-        fontFamily: "Arial",
-        backgroundColor: "#f4f6f9",
-        minHeight: "100vh"
+        fontFamily: "Arial"
       }}
     >
-      <h1 style={{ textAlign: "center" }}>🚀 CloudOps Hub</h1>
+      <h1>🚀 CloudOps Hub</h1>
 
-      <p style={{ textAlign: "center", color: "#666" }}>
-        Azure Cloud Monitoring Dashboard
-      </p>
+      <button
+        onClick={fetchData}
+        style={{
+          padding: "10px 20px",
+          marginBottom: "20px",
+          cursor: "pointer"
+        }}
+      >
+        🔄 Refresh Dashboard
+      </button>
 
-      <p style={{ textAlign: "center", color: "#888" }}>
-        Last Updated: {lastUpdated}
-      </p>
+      {/* System Status */}
+      <div
+        style={{
+          border: "1px solid #ddd",
+          padding: "15px",
+          marginTop: "15px"
+        }}
+      >
+        <h2>System Status</h2>
+        <p>🟢 {data.status}</p>
+      </div>
 
-      <div style={{ textAlign: "center", marginBottom: "25px" }}>
-        <button
-          onClick={fetchData}
+      {/* Resource Health */}
+      <div
+        style={{
+          border: "1px solid #ddd",
+          padding: "15px",
+          marginTop: "15px"
+        }}
+      >
+        <h2>Resource Health</h2>
+        <p>Frontend: 🟢 {data.frontendHealth}</p>
+        <p>Backend: 🟢 {data.backendHealth}</p>
+      </div>
+
+      {/* System Metrics */}
+      <div
+        style={{
+          border: "1px solid #ddd",
+          padding: "15px",
+          marginTop: "15px"
+        }}
+      >
+        <h2>System Metrics</h2>
+        <p>CPU Usage: {data.cpuUsage}</p>
+        <p>Memory Usage: {data.memoryUsage}</p>
+        <p>Uptime: {data.uptime}</p>
+        <p>Active Users: {data.activeUsers}</p>
+      </div>
+
+      {/* Deployment */}
+      <div
+        style={{
+          border: "1px solid #ddd",
+          padding: "15px",
+          marginTop: "15px"
+        }}
+      >
+        <h2>Deployment Information</h2>
+        <p>Last Deployment: {data.lastDeployment}</p>
+      </div>
+
+      {/* Azure Monitoring */}
+      <div
+        style={{
+          border: "1px solid #ddd",
+          padding: "15px",
+          marginTop: "15px"
+        }}
+      >
+        <h2>Azure Monitoring</h2>
+        <p>📊 Application Insights: Connected</p>
+        <p>📡 Live Telemetry: Active</p>
+        <p>🟢 Frontend Status: Healthy</p>
+        <p>🟢 Backend Status: Healthy</p>
+      </div>
+
+      {/* Alert Management */}
+      <div
+        style={{
+          border: "1px solid #ddd",
+          padding: "15px",
+          marginTop: "15px"
+        }}
+      >
+        <h2>🚨 Alert Management</h2>
+
+        <div
           style={{
-            padding: "10px 20px",
-            border: "none",
-            borderRadius: "8px",
-            cursor: "pointer",
-            fontSize: "16px"
+            backgroundColor: "#ffe5e5",
+            padding: "10px",
+            marginBottom: "10px",
+            borderRadius: "5px"
           }}
         >
-          🔄 Refresh Dashboard
-        </button>
-      </div>
-
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-          gap: "20px"
-        }}
-      >
-        <div style={cardStyle}>
-          <h3>🟢 System Status</h3>
-          <h2 style={{ color: getStatusColor(data.status) }}>
-            {data.status}
-          </h2>
+          🚨 Critical Alerts: {data.alerts?.critical}
         </div>
 
-        <div style={cardStyle}>
-          <h3>⚙ CPU Usage</h3>
-          <h2>{data.cpuUsage}</h2>
+        <div
+          style={{
+            backgroundColor: "#fff4e5",
+            padding: "10px",
+            marginBottom: "10px",
+            borderRadius: "5px"
+          }}
+        >
+          ⚠️ Warning Alerts: {data.alerts?.warning}
         </div>
 
-        <div style={cardStyle}>
-          <h3>🧠 Memory Usage</h3>
-          <h2>{data.memoryUsage}</h2>
-        </div>
-
-        <div style={cardStyle}>
-          <h3>🚀 Deployment</h3>
-          <h2>Success</h2>
-        </div>
-
-        <div style={cardStyle}>
-          <h3>📈 Uptime</h3>
-          <h2>{data.uptime}</h2>
-        </div>
-
-        <div style={cardStyle}>
-          <h3>👥 Active Users</h3>
-          <h2>{data.activeUsers}</h2>
-        </div>
-
-        <div style={cardStyle}>
-          <h3>🚨 Alerts</h3>
-          <h2>{data.alerts}</h2>
+        <div
+          style={{
+            backgroundColor: "#e5f0ff",
+            padding: "10px",
+            borderRadius: "5px"
+          }}
+        >
+          ℹ️ Information Alerts: {data.alerts?.info}
         </div>
       </div>
 
+      {/* Recent Alerts */}
       <div
         style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-          gap: "20px",
-          marginTop: "30px"
+          border: "1px solid #ddd",
+          padding: "15px",
+          marginTop: "15px"
         }}
       >
-        <div style={cardStyle}>
-          <h2>Resource Health</h2>
-          <p>Frontend: 🟢 {data.frontendHealth}</p>
-          <p>Backend: 🟢 {data.backendHealth}</p>
-        </div>
+        <h2>📋 Recent Alerts</h2>
 
-        <div style={cardStyle}>
-          <h2>Deployment Information</h2>
-          <p>Project: {data.project}</p>
-          <p>Last Deployment: {data.lastDeployment}</p>
-        </div>
-        <div style={{ border: "1px solid #ddd", padding: "15px", marginTop: "15px" }}>
-  <h2>Azure Monitoring</h2>
-  <p>📊 Application Insights: Connected</p>
-  <p>📡 Live Telemetry: Active</p>
-  <p>🟢 Frontend Status: Healthy</p>
-  <p>🟢 Backend Status: Healthy</p>
-</div>
-<div
-  style={{
-    border: "1px solid #ddd",
-    padding: "15px",
-    marginTop: "15px"
-  }}
->
-  <h2>🚨 Alert Management</h2>
-
-  <p>🚨 Critical Alerts: {data.alerts.critical}</p>
-
-  <p>⚠️ Warning Alerts: {data.alerts.warning}</p>
-
-  <p>ℹ️ Information Alerts: {data.alerts.info}</p>
-</div>
+        {data.recentAlerts?.map((alert, index) => (
+          <div
+            key={index}
+            style={{
+              padding: "10px",
+              borderBottom: "1px solid #eee"
+            }}
+          >
+            <strong>{alert.severity}</strong> - {alert.message}
+          </div>
+        ))}
       </div>
     </div>
   );
