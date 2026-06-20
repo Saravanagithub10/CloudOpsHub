@@ -74,6 +74,26 @@ app.http('GetStatus', {
                         status: "Success"
                     }
                 ]
+                healthScore: "98%",
+
+services: [
+    {
+        name: "Azure Static Web App",
+        status: "Online"
+    },
+    {
+        name: "Azure Function App",
+        status: "Online"
+    },
+    {
+        name: "Application Insights",
+        status: "Online"
+    },
+    {
+        name: "GitHub Actions",
+        status: "Connected"
+    }
+]
             }
         };
     }

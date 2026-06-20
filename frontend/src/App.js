@@ -107,6 +107,18 @@ function App() {
     </h2>
   </div>
 </div>
+<div
+  style={{
+    backgroundColor: "#e8ffe8",
+    padding: "20px",
+    borderRadius: "10px",
+    textAlign: "center",
+    marginBottom: "20px"
+  }}
+>
+  <h2>🟢 System Health Score</h2>
+  <h1>{data.healthScore}</h1>
+</div>
 
       <button
         onClick={fetchData}
@@ -185,6 +197,27 @@ function App() {
         <p>🟢 Frontend Status: Healthy</p>
         <p>🟢 Backend Status: Healthy</p>
       </div>
+      <div
+  style={{
+    border: "1px solid #ddd",
+    padding: "15px",
+    marginTop: "15px"
+  }}
+>
+  <h2>🌐 Service Availability</h2>
+
+  {data.services?.map((service, index) => (
+    <div
+      key={index}
+      style={{
+        padding: "10px",
+        borderBottom: "1px solid #eee"
+      }}
+    >
+      🟢 {service.name} - {service.status}
+    </div>
+  ))}
+</div>
 
       {/* Alert Management */}
       <div
