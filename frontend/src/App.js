@@ -282,7 +282,65 @@ function App() {
           >
             <strong>{alert.severity}</strong> - {alert.message}
           </div>
+          
         ))}
+        {/* Incident Timeline */}
+<div
+  style={{
+    border: "1px solid #ddd",
+    padding: "15px",
+    marginTop: "15px"
+  }}
+>
+  <h2>📅 Incident Timeline</h2>
+
+  {data.incidentTimeline?.map((item, index) => (
+    <div
+      key={index}
+      style={{
+        padding: "10px",
+        borderBottom: "1px solid #eee"
+      }}
+    >
+      <strong>{item.time}</strong> - {item.event}
+    </div>
+  ))}
+</div>
+{/* Deployment History */}
+<div
+  style={{
+    border: "1px solid #ddd",
+    padding: "15px",
+    marginTop: "15px"
+  }}
+>
+  <h2>🚀 Deployment History</h2>
+
+  <table
+    style={{
+      width: "100%",
+      borderCollapse: "collapse"
+    }}
+  >
+    <thead>
+      <tr>
+        <th style={{ textAlign: "left", padding: "8px" }}>Version</th>
+        <th style={{ textAlign: "left", padding: "8px" }}>Date</th>
+        <th style={{ textAlign: "left", padding: "8px" }}>Status</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {data.deploymentHistory?.map((deployment, index) => (
+        <tr key={index}>
+          <td style={{ padding: "8px" }}>{deployment.version}</td>
+          <td style={{ padding: "8px" }}>{deployment.date}</td>
+          <td style={{ padding: "8px" }}>{deployment.status}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
       </div>
     </div>
   );
