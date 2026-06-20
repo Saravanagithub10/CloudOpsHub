@@ -10,12 +10,18 @@ app.http('GetStatus', {
                 status: "Running",
                 cpuUsage: "25%",
                 memoryUsage: "40%",
+                lastDeployment: new Date().toLocaleString(),
+                frontendHealth: "Healthy",
+                backendHealth: "Healthy",
+
                 uptime: "99.9%",
                 activeUsers: 128,
-                alerts: 0,
-                lastDeployment: "2026-06-19",
-                frontendHealth: "Healthy",
-                backendHealth: "Healthy"
+
+                alerts: {
+                    critical: 0,
+                    warning: 2,
+                    info: 5
+                }
             }
         };
     }

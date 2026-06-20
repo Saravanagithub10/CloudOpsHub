@@ -163,6 +163,21 @@ function App() {
   <p>🟢 Frontend Status: Healthy</p>
   <p>🟢 Backend Status: Healthy</p>
 </div>
+<div
+  style={{
+    border: "1px solid #ddd",
+    padding: "15px",
+    marginTop: "15px"
+  }}
+>
+  <h2>🚨 Alert Management</h2>
+
+  <p>🚨 Critical Alerts: {data.alerts.critical}</p>
+
+  <p>⚠️ Warning Alerts: {data.alerts.warning}</p>
+
+  <p>ℹ️ Information Alerts: {data.alerts.info}</p>
+</div>
       </div>
     </div>
   );
