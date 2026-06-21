@@ -50,8 +50,7 @@ The application provides visibility into system health, service availability, al
 
 ## Architecture Diagram
 
-![CloudOps Hub Architecture](screenshots/Architecture-diagram.png)
-
+![CloudOps Hub Architecture](screenshots/Architecture_diagram.png)
 ---
 
 ## Project Outcomes
