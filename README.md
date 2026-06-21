@@ -48,11 +48,9 @@ The application provides visibility into system health, service availability, al
 
 ---
 
-## Architecture
+## Architecture Diagram
 
-User → Azure Static Web App → Azure Function App → Application Insights
-
-GitHub Actions automates deployment for both frontend and backend.
+![CloudOps Hub Architecture](screenshots/architecture-diagram.png)
 
 ---
 
